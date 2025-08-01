@@ -1,47 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import "./Navbar.css";
+import "./HeroSection.css";
+import "./ProjectsSection.css";
+import "./SkillsSection.css";
+import "./AboutSection.css";
+import "./ContactSection.css";
+import Navbar from "./Navbar";
+import HeroSection from "./HeroSection";
+import ProjectsSection from "./ProjectsSection";
+import SkillsSection from "./SkillsSection";
+import AboutSection from "./AboutSection";
+import ContactSection from "./ContactSection";
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
+  // Set dark mode as default as per spec
+  const [theme, setTheme] = useState("dark");
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    // Set accent color variable in root for consistent theming
+    document.documentElement.style.setProperty("--accent", "#e94560");
   }, [theme]);
 
   // PUBLIC_INTERFACE
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
+      <main>
+        <HeroSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <AboutSection />
+      </main>
+      <ContactSection />
     </div>
   );
 }
